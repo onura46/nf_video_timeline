@@ -8,7 +8,7 @@ import datetime
 st.title( "watchmeforever clip timeline" )
 
 # create variables
-directory = "E:/nothing_forever/watchmeforever_test/"
+directory = "watchmeforever_test/"
 num_of_file = 0
 
 # iterate across each video
