@@ -11,6 +11,8 @@ st.title( "watchmeforever clip timeline" )
 directory = "watchmeforever_test/"
 num_of_file = 0
 
+all_videos_df = None
+
 # iterate across each video
 for filename in os.listdir(directory):
     if filename.endswith("mp4"):
@@ -50,11 +52,12 @@ for filename in os.listdir(directory):
                 "duration" : duration,
                 "video_end" : video_end
             }
-            st.write(file_definitions)
-
-            # bad, doesn't work, fix pls
-            # needs one chart for whole thing and to append new data to it on each iteration
             newdef = pd.DataFrame([file_definitions])
-            graph = px.timeline(newdef, x_start="timestamp", x_end="video_end", y="video_real_date")
-            st.plotly_chart(graph)
+            if all_videos_df is None:
+                all_videos_df = newdef
+            else:
+                all_videos_df = pd.concat([all_videos_df,newdef])
 
+st.dataframe(all_videos_df)
+graph = px.timeline(all_videos_df, x_start="timestamp", x_end="video_end", y="video_real_date")
+st.plotly_chart(graph)
